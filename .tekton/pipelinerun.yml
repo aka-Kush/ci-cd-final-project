@@ -1,0 +1,20 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: app-run-
+spec:
+  pipelineRef:
+    name: app-pipeline
+
+  workspaces:
+    - name: output
+      persistentVolumeClaim:
+        claimName: oc-lab-pvc
+
+  params:
+    - name: repo-url
+      value: https://github.com/YOUR-USERNAME/YOUR-REPO
+    - name: app-name
+      value: counter-app
+    - name: build-image
+      value: image-registry.openshift-image-registry.svc:5000/default/counter-app
